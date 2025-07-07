@@ -1,6 +1,81 @@
+# Fishの起動メッセージを非表示
+set fish_greeting ""
+
+# PATH設定を最初に実行
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.local/share/mise/shims
+fish_add_path $HOME/bin
+
 if status is-interactive
-    set -x PATH $HOME/.local/bin $PATH
     # Commands to run in interactive sessions can go here
-    mise activate fish | source
-    starship init fish | source
+    
+    # mise設定（インストールされている場合のみ）
+    if command -q mise
+        mise activate fish | source
+        mise completions fish | source
+    end
+    
+    # starship設定（インストールされている場合のみ）
+    if command -q starship
+        starship init fish | source
+    end
+    
+    # ls関係のエイリアス
+    alias ls="eza --group-directories-first -F"
+    alias lsm="eza --sort=modified --group-directories-first -rF"
+    alias l="eza --group-directories-first -F"
+    alias lm="eza --sort=modified --group-directories-first -rF"
+    alias ll="eza -alF --group-directories-first --icons"
+    alias llm="eza -alrF --sort=modified --group-directories-first --icons"
+    alias llf="eza -alTL --icons"
+    alias la="eza -AF --group-directories-first"
+    alias lam="eza -ArF --sort=modified --group-directories-first"
+    
+    # その他のエイリアス
+    alias killcad="taskkill.exe /F /IM LibreCAD.exe"
+    alias psh="/mnt/c/'Program\ Files'/PowerShell/7/pw:sh.exe"
+    alias cat="bat:"
+    alias s="sudo"
+    alias win="wslview"
+    alias b="bd"
+    alias vi="nvim"
+    alias sof="source ~/.config/fish/config.fish"
+    
+    # 環境変数設定
+    set -gx GHQ_SELECTOR peco
+    set -gx BROWSER "pwsh.exe /c start"
+    set -gx EZA_OPTIONS "--icons --group-directories-first --git"
+    set -gx EZA_COLORS "di=36:da=36"
+    set -gx EDITOR nvim
+    set -gx VISUAL nvim
+end
+
+# 関数定義
+# 既存の cd 関数が定義されているか確認してから定義する
+if not functions -q standard_cd
+    functions --copy cd standard_cd
+end
+
+# cd 関数を上書き
+function cd --wraps cd
+    standard_cd $argv; and eza -F
+end
+
+function tabe
+    set windows_path ""
+    if test (count $argv) -eq 0
+        # 引数なしの場合、カレントディレクトリを開く
+        set windows_path (wslpath -w (pwd))
+    else
+        set input_path $argv[1]
+        if string match -q / $input_path
+            # 絶対パスの場合
+            set windows_path (wslpath -w $input_path)
+        else
+            # 相対パスの場合
+            set windows_path (wslpath -w (realpath $input_path))
+        end
+    end
+    
+    "/mnt/c/bin/te/TE64.exe" $windows_path
 end
