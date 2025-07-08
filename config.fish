@@ -41,6 +41,12 @@ if status is-interactive
     alias vi="nvim"
     alias sof="source ~/.config/fish/config.fish"
     
+    # FZF + ripgrep エイリアス
+    alias frg="fzf_rg"
+    alias fgf="fzf_git_files"
+    alias fgl="fzf_git_log"
+    alias fcd="fzf_cd"
+    
     # 環境変数設定
     set -gx GHQ_SELECTOR peco
     set -gx BROWSER "pwsh.exe /c start"
@@ -48,6 +54,12 @@ if status is-interactive
     set -gx EZA_COLORS "di=36:da=36"
     set -gx EDITOR nvim
     set -gx VISUAL nvim
+    
+    # FZF設定
+    set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!.git/*"'
+    set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+    set -gx FZF_DEFAULT_OPTS '--height 40% --layout=reverse --border --bind ctrl-a:select-all,ctrl-d:deselect-all'
+    set -gx FZF_CTRL_T_OPTS '--preview "bat --color=always --style=numbers --line-range=:500 {}"'
 end
 
 # 関数定義
