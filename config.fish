@@ -60,6 +60,9 @@ if status is-interactive
     set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
     set -gx FZF_DEFAULT_OPTS '--height 40% --layout=reverse --border --bind ctrl-a:select-all,ctrl-d:deselect-all'
     set -gx FZF_CTRL_T_OPTS '--preview "bat --color=always --style=numbers --line-range=:500 {}"'
+    
+    # コンテキスト対応ヘルプ表示
+    bind \ch show_context_help
 end
 
 # 関数定義
