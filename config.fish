@@ -4,6 +4,7 @@ set fish_greeting ""
 # PATH設定を最初に実行
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/mise/shims
+fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/bin
 
 if status is-interactive
@@ -35,11 +36,12 @@ if status is-interactive
     alias killcad="taskkill.exe /F /IM LibreCAD.exe"
     alias psh="/mnt/c/'Program\ Files'/PowerShell/7/pw:sh.exe"
     alias cat="bat:"
-    alias s="sudo"
+    abbr s sudo
     alias win="wslview"
-    alias b="bd"
-    alias vi="nvim"
-    alias sof="source ~/.config/fish/config.fish"
+    alias b="bd -i"
+    abbr vi nvim
+    abbr sof "source ~/.config/fish/config.fish"
+    abbr tl "tldr -L ja"
     
     # FZF + ripgrep エイリアス
     alias frg="fzf_rg"
@@ -54,6 +56,7 @@ if status is-interactive
     set -gx EZA_COLORS "di=36:da=36"
     set -gx EDITOR nvim
     set -gx VISUAL nvim
+    set -gx TEALDEER_LANGUAGE ja
     
     # FZF設定
     set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!.git/*"'
@@ -63,6 +66,9 @@ if status is-interactive
     
     # コンテキスト対応ヘルプ表示
     bind \ch show_context_help
+    
+    # zプラグインをjでも使用可能に
+    abbr j z
 end
 
 # 関数定義
