@@ -6,6 +6,7 @@ fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/mise/shims
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/bin
+fish_add_path $HOME/.claude_plugin/scripts
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
