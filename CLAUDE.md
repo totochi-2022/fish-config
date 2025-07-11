@@ -25,6 +25,7 @@
 - `jethrokuan/z` - 頻度に基づくディレクトリジャンプ
 - `starship/starship` - クロスシェルプロンプト
 - `patrickf1/fzf.fish` - ファジーファインダー統合
+- `laughedelic/pisces` - 括弧・クォートの自動ペアリング
 
 ## 主要な関数とコマンド
 
@@ -32,12 +33,18 @@
 - `bd <directory>` - パターンに一致する親ディレクトリに戻る
   - `bd -s <pattern>` - パターンで始まるディレクトリをマッチ
   - `bd -i <pattern>` - 大文字小文字を区別しないマッチング
+- `b <directory>` - bdの大文字小文字を区別しないショートカット
 - `z <directory>` - 頻繁に使用するディレクトリにジャンプ
+- `j <directory>` - zプラグインのショートカット（abbreviation）
 - **FZFバインディング** - さまざまなファジー検索操作用に設定済み
 
 ### ユーティリティ
 - `extract <archive>` - さまざまなアーカイブ形式を展開（tar、zip、rarなど）
 - `nvm` - Nodeバージョン管理コマンド
+- `tl <command>` - tldr（日本語版）のショートカット
+- `s <command>` - sudoのショートカット（abbreviation）
+- `vi <file>` - nvimのショートカット（abbreviation）
+- `sof` - Fish設定再読み込みのショートカット（abbreviation）
 
 ### プロンプト機能
 - **左プロンプト**: 現在のディレクトリを表示、リモート時はSSHユーザー情報も表示
@@ -65,9 +72,12 @@
 
 ### 開発ツール統合
 - nvm.fishを通じたNode.jsバージョン管理
+- miseを通じたランタイムバージョン管理（Rust、Node.js等）
+- Cargoツール（tldr等）のサポート（`~/.cargo/bin`がPATHに追加済み）
 - 詳細なプロンプトとFZF統合によるGitワークフロー拡張
 - extract関数によるアーカイブ処理
 - 長時間実行操作のコマンド完了通知
+- pisces プラグインによる自動括弧・クォート補完
 
 ## 設定ファイル
 
@@ -92,3 +102,6 @@
 - Starshipプロンプトのインストール
 - ファジーファインダーのためのFZFのインストール
 - 展開機能のためのさまざまなアーカイブツール（tar、zip、unrarなど）
+- Rustツールチェーン（Cargoツール用）
+- 構文ハイライト付きcatのためのbat
+- 現代的なlsのためのeza
