@@ -73,8 +73,9 @@ if status is-interactive
     # コンテキスト対応ヘルプ表示
     bind \ch show_context_help
 
-    # zプラグインをjでも使用可能に
-    abbr j z
+    # zプラグインをjでも使用可能に（pwd出力付き）
+    abbr j zp
+    abbr z zp
 end
 
 # 関数定義
