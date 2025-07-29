@@ -120,3 +120,4 @@ function tabe
 
     "/mnt/c/bin/te/TE64.exe" $windows_path
 end
+set -x PATH $HOME/.local/share/gem/ruby/3.4.0/bin $PATH
