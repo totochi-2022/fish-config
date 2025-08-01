@@ -73,6 +73,9 @@ if status is-interactive
 
     # コンテキスト対応ヘルプ表示
     bind \ch show_context_help
+    
+    # Fuzzy selector
+    bind \cv fs
 
     # zプラグインをjでも使用可能に（pwd出力付き）
     abbr j zp
