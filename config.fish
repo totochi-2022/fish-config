@@ -59,6 +59,7 @@ if status is-interactive
     set -gx SUDO_EDITOR nvim
     set -gx VISUAL nvim
     set -gx TEALDEER_LANGUAGE ja
+    set -gx CLAUDE_CODE_AUTO_UPDATE false
     
     # .NET設定
     set -gx DOTNET_ROOT ~/.local/share/mise/installs/dotnet-core/8.0.412
@@ -119,5 +120,13 @@ function tabe
     end
 
     "/mnt/c/bin/te/TE64.exe" $windows_path
+end
+
+# zプラグイン拡張関数
+function zp -d "z with pwd and ls output"
+    set target (__z -e $argv)
+    and standard_cd "$target"
+    and pwd
+    and ls -F
 end
 set -x PATH $HOME/.local/share/gem/ruby/3.4.0/bin $PATH
