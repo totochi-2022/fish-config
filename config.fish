@@ -60,7 +60,7 @@ if status is-interactive
     set -gx VISUAL nvim
     set -gx TEALDEER_LANGUAGE ja
     set -gx CLAUDE_CODE_AUTO_UPDATE false
-    
+
     # .NET設定
     set -gx DOTNET_ROOT ~/.local/share/mise/installs/dotnet-core/8.0.412
     set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
@@ -129,4 +129,7 @@ function zp -d "z with pwd and ls output"
     and pwd
     and ls -F
 end
+
+# zp関数の補完設定
+complete -c zp -a "(__z -l | string replace -r '^\\S*\\s*' '')" -f -k
 set -x PATH $HOME/.local/share/gem/ruby/3.4.0/bin $PATH
