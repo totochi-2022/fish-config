@@ -1,190 +1,355 @@
-[aws]
-symbol = "  "
+# Tokyo Night テーマカラーパレット
+palette = "tokyo_night"
 
-[buf]
-symbol = " "
+[palettes.tokyo_night]
+# Tokyo Night カラー
+background = "#1a1b26"
+foreground = "#a9b1d6"
+selection = "#2e3c64"
+comment = "#565f89"
+red = "#f7768e"
+orange = "#ff9e64"
+yellow = "#e0af68"
+green = "#9ece6a"
+cyan = "#73daca"
+blue = "#7aa2f7"
+purple = "#bb9af7"
+magenta = "#c0caf5"
+pink = "#f7768e"
 
-[bun]
-symbol = " "
+# 基本設定
+format = """
+[](#1a1b26)\
+$os\
+$username\
+[](bg:#2e3c64 fg:#1a1b26)\
+$directory\
+[](fg:#2e3c64 bg:#3b4261)\
+$git_branch\
+$git_status\
+[](fg:#3b4261 bg:#394b70)\
+$nodejs\
+$rust\
+$golang\
+$php\
+$python\
+$java\
+[](fg:#394b70 bg:#7aa2f7)\
+$time\
+[ ](fg:#7aa2f7)\
+$line_break$character"""
 
-[c]
-symbol = " "
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
 
-[cpp]
-symbol = " "
+[os]
+format = '[ $symbol ]($style)'
+style = "bg:#1a1b26 fg:#c0caf5"
+disabled = false
 
-[cmake]
-symbol = " "
-
-[conda]
-symbol = " "
-
-[crystal]
-symbol = " "
-
-[dart]
-symbol = " "
-
-[deno]
-symbol = " "
+[username]
+show_always = true
+style_user = "bg:#1a1b26 fg:#c0caf5"
+style_root = "bg:#1a1b26 fg:#f7768e"
+format = '[ $user ]($style)'
 
 [directory]
+style = "fg:#c0caf5 bg:#2e3c64"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
 read_only = " 󰌾"
 
-[docker_context]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
-
-[fennel]
-symbol = " "
-
-[fossil_branch]
-symbol = " "
-
-[gcloud]
-symbol = "  "
-
 [git_branch]
-symbol = " "
+symbol = " "
+style = "bg:#3b4261"
+format = '[[ $symbol $branch ](fg:#bb9af7 bg:#3b4261)]($style)'
+
+[git_status]
+style = "bg:#3b4261"
+format = '[[($all_status$ahead_behind )](fg:#bb9af7 bg:#3b4261)]($style)'
 
 [git_commit]
-tag_symbol = '  '
+tag_symbol = '  '
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:#7aa2f7 fg:#1a1b26"
+format = '[ ♥ $time ]($style)'
+
+# 言語・ツール設定（Tokyo Night カラーで統一）
+[aws]
+symbol = "  "
+style = "bg:#394b70"
+format = '[[ $symbol ($profile )($region) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[buf]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[bun]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[c]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[cpp]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[cmake]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[conda]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol $environment ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[crystal]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[dart]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[deno]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol $context ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[elixir]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[elm]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[fennel]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[fossil_branch]
+symbol = " "
+style = "bg:#3b4261"
+format = '[[ $symbol $branch ](fg:#bb9af7 bg:#3b4261)]($style)'
+
+[gcloud]
+symbol = "  "
+style = "bg:#394b70"
+format = '[[ $symbol $account(@$domain)(\($region\)) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [golang]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
+
+[gradle]
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [guix_shell]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [haskell]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [haxe]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [hg_branch]
-symbol = " "
+symbol = " "
+style = "bg:#3b4261"
+format = '[[ $symbol $branch ](fg:#bb9af7 bg:#3b4261)]($style)'
 
 [hostname]
-ssh_symbol = " "
+ssh_symbol = " "
+style = "bg:#1a1b26 fg:#c0caf5"
+format = '[ $ssh_symbol $hostname ]($style)'
 
 [java]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [julia]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [kotlin]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [lua]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [memory_usage]
 symbol = "󰍛 "
+style = "bg:#394b70"
+format = '[[ $symbol ${ram}( | ${swap}) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [meson]
 symbol = "󰔷 "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [nim]
 symbol = "󰆥 "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [nix_shell]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol $state( \($name\)) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [nodejs]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [ocaml]
-symbol = " "
-
-[os.symbols]
-Alpaquita = " "
-Alpine = " "
-AlmaLinux = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CachyOS = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "󰛓 "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = "󰈸 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-Nobara = " "
-OpenBSD = "󰈺 "
-openSUSE = " "
-OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-RockyLinux = " "
-Redox = "󰀘 "
-Solus = "󰠳 "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Void = " "
-Windows = "󰍲 "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [package]
 symbol = "󰏗 "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [perl]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [php]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [pijul_channel]
-symbol = " "
+symbol = " "
+style = "bg:#3b4261"
+format = '[[ $symbol $channel ](fg:#bb9af7 bg:#3b4261)]($style)'
 
 [pixi]
 symbol = "󰏗 "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [python]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol $pyenv_prefix($version)(\($virtualenv\)) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [rlang]
 symbol = "󰟔 "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [ruby]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [rust]
 symbol = "󱘗 "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [scala]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [swift]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
 [zig]
-symbol = " "
+symbol = " "
+style = "bg:#394b70"
+format = '[[ $symbol ($version) ](fg:#c0caf5 bg:#394b70)]($style)'
 
-[gradle]
-symbol = " "
+# OS シンボル
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "

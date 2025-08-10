@@ -1,6 +1,9 @@
 # Fishの起動メッセージを非表示
 set fish_greeting ""
 
+# Starship設定（対話モードの外で設定）
+set -gx STARSHIP_CONFIG ~/.config/fish/starship.toml
+
 # PATH設定を最初に実行
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/mise/shims
@@ -15,11 +18,6 @@ if status is-interactive
     if command -q mise
         mise activate fish | source
         # mise completions fish | source  # 一時的に無効化（usage CLIが必要）
-    end
-
-    # starship設定（インストールされている場合のみ）
-    if command -q starship
-        starship init fish | source
     end
 
     # ls関係のエイリアス（mise activateの後に配置）
@@ -109,15 +107,15 @@ end
 function tabe
     set windows_path ""
     if test (count $argv) -eq 0
-        # 引数なしの場合、カレントディレクトリを開く
+    # 引数なしの場合、カレントディレクトリを開く
         set windows_path (wslpath -w (pwd))
     else
         set input_path $argv[1]
         if string match -q / $input_path
-            # 絶対パスの場合
+        # 絶対パスの場合
             set windows_path (wslpath -w $input_path)
         else
-            # 相対パスの場合
+        # 相対パスの場合
             set windows_path (wslpath -w (realpath $input_path))
         end
     end
@@ -144,7 +142,8 @@ if test -f ~/.config/fish/config.local.fish
 end
 
 # ホスト別設定（Gitで管理）
-set -l hostname (hostname)
-if test -f ~/.config/fish/machines/$hostname.fish
-    source ~/.config/fish/machines/$hostname.fish
+set -l current_hostname (hostname)
+if test -f ~/.config/fish/machines/$current_hostname.fish
+    source ~/.config/fish/machines/$current_hostname.fish
 end
+
