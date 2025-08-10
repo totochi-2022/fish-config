@@ -46,6 +46,12 @@ if not command -q rg
     echo "   apt install ripgrep"
 end
 
+# 4. Starship設定のシンボリックリンク
+if not test -L ~/.config/starship.toml
+    echo "🚀 Starship設定のシンボリックリンクを作成中..."
+    ln -sf (pwd)/starship.toml ~/.config/starship.toml
+end
+
 # 4. ローカル設定ファイルのテンプレート作成
 if not test -f ~/.config/fish/config.local.fish
     echo "📝 ローカル設定ファイルを作成中..."
