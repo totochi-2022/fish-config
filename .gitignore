@@ -1,0 +1,12 @@
+# Fish設定ファイル管理
+fish_history
+config.local.fish
+fish_variables  # APIキーなど環境依存の変数が含まれる
+
+# システムファイル
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*~
+

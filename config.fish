@@ -14,7 +14,7 @@ if status is-interactive
     # mise設定（インストールされている場合のみ）
     if command -q mise
         mise activate fish | source
-        mise completions fish | source
+        # mise completions fish | source  # 一時的に無効化（usage CLIが必要）
     end
 
     # starship設定（インストールされている場合のみ）
@@ -136,3 +136,15 @@ end
 # zp関数の補完設定
 complete -c zp -a "(__z -l | string replace -r '^\\S*\\s*' '')" -f -k
 set -x PATH $HOME/.local/share/gem/ruby/3.4.0/bin $PATH
+
+# ========== ローカル設定の読み込み ==========
+# マシン固有の設定（Gitで管理しない）
+if test -f ~/.config/fish/config.local.fish
+    source ~/.config/fish/config.local.fish
+end
+
+# ホスト別設定（Gitで管理）
+set -l hostname (hostname)
+if test -f ~/.config/fish/machines/$hostname.fish
+    source ~/.config/fish/machines/$hostname.fish
+end
