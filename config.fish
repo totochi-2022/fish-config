@@ -34,7 +34,7 @@ if status is-interactive
     # その他のエイリアス
     alias killcad="taskkill.exe /F /IM LibreCAD.exe"
     alias psh="/mnt/c/'Program\ Files'/PowerShell/7/pw:sh.exe"
-    alias cat="bat:"
+    alias cat="bat"
     abbr s sudo
     alias win="wslview"
     alias b="bd -i"
@@ -71,7 +71,7 @@ if status is-interactive
 
     # コンテキスト対応ヘルプ表示
     bind \ch show_context_help
-    
+
     # Fuzzy selector
     bind \cv fs
 

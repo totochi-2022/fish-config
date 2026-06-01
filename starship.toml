@@ -17,7 +17,10 @@ $python\
 
 [os]
 disabled = false
+format = "[$symbol]($style) "
 
+[os.symbols]
+Ubuntu = ""
 [hostname]
 ssh_only = false
 format = "[$ssh_symbol$hostname]($style) "
@@ -67,3 +70,4 @@ style = "red"
 [python]
 format = "[$symbol($version )]($style) "
 style = "yellow"
+
