@@ -1,7 +1,8 @@
 # Fish設定ファイル管理
 fish_history
 config.local.fish
-fish_variables  # APIキーなど環境依存の変数が含まれる
+# APIキーなど環境依存の変数が含まれる
+fish_variables
 
 # システムファイル
 .DS_Store

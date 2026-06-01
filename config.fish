@@ -49,7 +49,7 @@ if status is-interactive
     alias fcd="fzf_cd"
 
     # 環境変数設定
-    set -gx GHQ_SELECTOR peco
+    set -gx GHQ_SELECTOR fzf
     set -gx BROWSER "pwsh.exe /c start"
     set -gx EZA_OPTIONS "--icons --group-directories-first --git"
     set -gx EZA_COLORS "di=36:da=36"
