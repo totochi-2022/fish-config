@@ -33,7 +33,7 @@ if status is-interactive
 
     # その他のエイリアス
     alias killcad="taskkill.exe /F /IM LibreCAD.exe"
-    alias psh="/mnt/c/'Program\ Files'/PowerShell/7/pw:sh.exe"
+    alias psh="/mnt/c/'Program\ Files'/PowerShell/7/pwsh.exe"
     alias cat="bat"
     abbr s sudo
     alias win="wslview"
@@ -59,8 +59,10 @@ if status is-interactive
     set -gx TEALDEER_LANGUAGE ja
     set -gx CLAUDE_CODE_AUTO_UPDATE false
 
-    # .NET設定
-    set -gx DOTNET_ROOT ~/.local/share/mise/installs/dotnet-core/8.0.412
+    # .NET設定（mise管理の有効バージョンを動的に解決）
+    if command -q mise; and mise where dotnet-core &>/dev/null
+        set -gx DOTNET_ROOT (mise where dotnet-core)
+    end
     set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 
     # FZF設定
@@ -133,7 +135,10 @@ end
 
 # zp関数の補完設定
 complete -c zp -a "(__z -l | string replace -r '^\\S*\\s*' '')" -f -k
-set -x PATH $HOME/.local/share/gem/ruby/3.4.0/bin $PATH
+# Ruby gem のユーザーbinを追加（バージョンはGem.user_dirから動的解決）
+if command -q ruby
+    fish_add_path (ruby -e 'print Gem.user_dir')/bin
+end
 
 # ========== ローカル設定の読み込み ==========
 # マシン固有の設定（Gitで管理しない）
