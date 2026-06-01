@@ -27,7 +27,7 @@ if status is-interactive
     alias lm="eza --sort=modified --group-directories-first -rF"
     alias ll="eza -alF --group-directories-first --icons"
     alias llm="eza -alrF --sort=modified --group-directories-first --icons"
-    alias llf="eza -alTL --icons"
+    alias llf="eza -alT --level=3 --icons"
     alias la="eza -AF --group-directories-first"
     alias lam="eza -ArF --sort=modified --group-directories-first"
 
