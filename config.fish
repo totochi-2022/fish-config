@@ -50,6 +50,8 @@ if status is-interactive
 
     # 環境変数設定
     set -gx GHQ_SELECTOR fzf
+    # ghq ルート: 先頭(~/ghq)が get の clone 先、list/Ctrl-G は ~/work も横断
+    set -gx GHQ_ROOT $HOME/ghq:$HOME/work
     set -gx BROWSER "pwsh.exe /c start"
     set -gx EZA_OPTIONS "--icons --group-directories-first --git"
     set -gx EZA_COLORS "di=36:da=36"
