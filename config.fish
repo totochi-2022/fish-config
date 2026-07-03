@@ -144,6 +144,18 @@ if command -q ruby
     fish_add_path (ruby -e 'print Gem.user_dir')/bin
 end
 
+# ========== atuin (シェル履歴) ==========
+# Ctrl-R は fish 標準の履歴検索を維持。atuin は Ctrl-E に割り当てる。
+# ATUIN_NOBIND で atuin の既定バインド(Ctrl-R/↑)を無効化してから初期化。
+if command -q atuin
+    set -gx ATUIN_NOBIND true
+    atuin init fish | source
+    bind \ce _atuin_search
+    if bind -M insert >/dev/null 2>/dev/null
+        bind -M insert \ce _atuin_search
+    end
+end
+
 # ========== ローカル設定の読み込み ==========
 # マシン固有の設定（Gitで管理しない）
 if test -f ~/.config/fish/config.local.fish
