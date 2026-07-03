@@ -81,6 +81,10 @@ if status is-interactive
     # Fuzzy selector
     bind \cv fs
 
+    # Claude セッション選択(ccpick): Ctrl-Alt-C
+    bind \e\cc __ccpick_key
+    bind -M insert \e\cc __ccpick_key
+
     # zプラグインをjでも使用可能に（pwd出力付き）
     abbr j zp
     abbr z zp
