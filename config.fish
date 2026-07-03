@@ -50,8 +50,10 @@ if status is-interactive
 
     # 環境変数設定
     set -gx GHQ_SELECTOR fzf
-    # ghq ルート: 先頭(~/ghq)が get の clone 先、list/Ctrl-G は ~/work も横断
-    set -gx GHQ_ROOT $HOME/ghq:$HOME/work
+    # ghq ルートは git config の ghq.root (複数) で管理する。
+    # fish の GHQ_ROOT に "a:b" と書くと ghq get が ":" を分割せず1個の
+    # ディレクトリ名として扱い、変なパスにクローンされるため env では設定しない。
+    # 現在: get の clone 先=~/ghq、list/Ctrl-G は ~/work も横断 (git config 参照)
     set -gx BROWSER "pwsh.exe /c start"
     set -gx EZA_OPTIONS "--icons --group-directories-first --git"
     set -gx EZA_COLORS "di=36:da=36"
