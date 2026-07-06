@@ -36,8 +36,8 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
         __ccpick_list | fzf --no-sort --delimiter \t --with-nth 1,2 \
             --prompt 'Claude> ' \
             --header '● 稼働 / ○ 停止   Enter:開く  C-x:正常終了(resume可)  M-k:強制kill' \
-            --preview 'eza -alF --group-directories-first --icons {3} 2>/dev/null || ls -la {3}' \
-            --preview-window 'down,45%' \
+            --preview 'fish -c "__ccpick_preview {3}"' \
+            --preview-window 'down,55%,wrap' \
             --bind 'ctrl-x:execute-silent(fish -c "__ccpick_exit {3}")+reload(fish -c __ccpick_list)' \
             --bind 'alt-k:execute-silent(fish -c "__ccpick_kill {3}")+reload(fish -c __ccpick_list)'
     )
