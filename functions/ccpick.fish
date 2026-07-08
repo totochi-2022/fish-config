@@ -30,10 +30,11 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
     # すべて claude-tasks に委譲する({3}=フルパス)。
     set -l chosen (
         claude-tasks list | fzf --no-sort --delimiter \t --with-nth 1,2 \
+            --height 100% \
             --prompt 'Claude> ' \
             --header '● 稼働 / ○ 停止   Enter:開く  C-x:正常終了(resume可)  M-k:強制kill' \
             --preview 'claude-tasks preview {3}' \
-            --preview-window 'down,55%,wrap' \
+            --preview-window 'down,65%,wrap' \
             --bind 'ctrl-x:execute-silent(claude-tasks exit {3})+reload(claude-tasks list)' \
             --bind 'alt-k:execute-silent(claude-tasks kill {3})+reload(claude-tasks list)'
     )
