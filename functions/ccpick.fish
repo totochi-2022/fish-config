@@ -52,8 +52,14 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
     cd $dir; or return 1
 
     if test "$key" = ctrl-f
-        # 会話モード: 同フォルダに fork セッションを新規起動(現会話を引き継いで独立)
-        set -l fsock (claude-tasks sock $dir chat)
+        # 会話モード: 同フォルダに fork セッションを新規起動(現会話を引き継いで独立)。
+        # 空き slot を発番(N個まで並列可)。
+        set -l slot (claude-tasks next-fork-slot $dir)
+        if test -z "$slot"
+            echo "会話モード: 空き slot がありません(同時数上限)" >&2
+            return 1
+        end
+        set -l fsock (claude-tasks sock $dir $slot)
         dtach -A $fsock (command -v claude) --continue --fork-session
         return
     end
