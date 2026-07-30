@@ -26,35 +26,47 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
         return 1
     end
 
-    # 一覧(●/○ + 表示パス + フルパス)を fzf へ。preview/exit/kill/reload は
-    # すべて claude-tasks に委譲する({3}=フルパス)。
-    set -l chosen (
+    # 一覧(●/○[+状態] + 表示パス + フルパス + id)を fzf へ。列: {3}=dir, {4}=id。
+    # id は "" (主セッション) or "chat" (会話モード fork)。同フォルダ2個目は別行(id=chat)で出る。
+    # C-f = その dir に会話モード(fork)を新規起動。preview/exit/kill は claude-tasks に委譲。
+    set -l out (
         claude-tasks list | fzf --no-sort --delimiter \t --with-nth 1,2 \
             --height 100% \
+            --expect=enter,ctrl-f \
             --prompt 'Claude> ' \
-            --header '● 稼働 / ○ 停止   Enter:開く  C-x:正常終了(resume可)  M-k:強制kill' \
+            --header '● 稼働 / ○ 停止   Enter:開く  C-f:会話モード(fork)  C-x:正常終了  M-k:強制kill' \
             --preview 'claude-tasks preview {3}' \
             --preview-window 'down,65%,wrap' \
-            --bind 'ctrl-x:execute-silent(claude-tasks exit {3})+reload(claude-tasks list)' \
-            --bind 'alt-k:execute-silent(claude-tasks kill {3})+reload(claude-tasks list)'
+            --bind 'ctrl-x:execute-silent(claude-tasks exit {3} {4})+reload(claude-tasks list)' \
+            --bind 'alt-k:execute-silent(claude-tasks kill {3} {4})+reload(claude-tasks list)'
     )
+    test -z "$out"; and return 0
+    set -l key $out[1]
+    set -l chosen $out[2]
     test -z "$chosen"; and return 0
     set -l dir (string split -f3 \t -- $chosen)
+    set -l id (string split -f4 \t -- $chosen)
     test -z "$dir"; and return 0
 
     claude-tasks add-history $dir
+    cd $dir; or return 1
 
-    # stale ソケット掃除(プロセスが居ないのにソケットだけ残っている場合)
-    set -l sock (claude-tasks sock $dir)
-    if not claude-tasks is-live $dir; and test -e "$sock"
-        rm -f "$sock"
+    if test "$key" = ctrl-f
+        # 会話モード: 同フォルダに fork セッションを新規起動(現会話を引き継いで独立)
+        set -l fsock (claude-tasks sock $dir chat)
+        dtach -A $fsock (command -v claude) --continue --fork-session
+        return
     end
 
-    # 過去会話ログがあれば --continue で前回を継続
+    # 通常 attach。fork 行(id=chat)を選べばその fork ソケットへ。
+    set -l sock (claude-tasks sock $dir $id)
+    if not claude-tasks is-live $dir $id; and test -e "$sock"
+        rm -f "$sock" # stale ソケット掃除
+    end
+    # 主セッションの新規起動時のみ過去ログを --continue(fork は fork起動側で扱う)
     set -l cont
-    claude-tasks needs-continue $dir; and set cont --continue
-
-    # dtach -A: 稼働中なら attach、無ければ dir を cwd にして起動(この部分は fish 固有)
-    cd $dir; or return 1
+    if test -z "$id"; and claude-tasks needs-continue $dir
+        set cont --continue
+    end
     dtach -A $sock (command -v claude) $cont
 end
