@@ -67,17 +67,20 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
     end
 
     if test "$key" = ctrl-w
-        # 平行開発: native worktree を生成して起動。選択が worktree 行なら母艦を使う。
+        # 平行開発: worktree を git で明示生成(native --worktree は dtach 下で作られないため)。
+        # 選択が worktree 行なら母艦を辿る。生成後、その worktree dir で普通にセッション起動。
         set -l repo $dir
         if string match -q '*/.claude/worktrees/*' -- $dir
             set repo (string replace -r '/\.claude/worktrees/.*' '' -- $dir)
         end
-        set -l name (claude-tasks worktree-newname $repo)
-        set -l wt $repo/.claude/worktrees/$name
+        set -l wt (claude-tasks worktree-create $repo)
+        if test -z "$wt"
+            echo "worktree 生成に失敗(git repo か? branch 衝突か?)" >&2
+            return 1
+        end
         claude-tasks add-history $wt
-        cd $repo; or return 1
-        # 母艦で claude --worktree(worktree 作成+.worktreeinclude)。socket は worktree パスで鍵付け。
-        dtach -A (claude-tasks sock $wt) (command -v claude) --worktree $name
+        cd $wt; or return 1
+        dtach -A (claude-tasks sock $wt) (command -v claude)
         return
     end
 
