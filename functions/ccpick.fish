@@ -32,13 +32,15 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
     set -l out (
         claude-tasks list | fzf --no-sort --delimiter \t --with-nth 1,2 \
             --height 100% \
-            --expect=enter,ctrl-f \
+            --expect=enter,ctrl-f,ctrl-w \
             --prompt 'Claude> ' \
-            --header '● 稼働 / ○ 停止   Enter:開く  C-f:会話モード(fork)  C-x:正常終了  M-k:強制kill' \
+            --header '● 稼働 / ○ 停止   Enter:開く  C-f:会話fork  C-w:worktree生成  M-m:結合  M-r:破棄  C-x:終了  M-k:kill' \
             --preview 'claude-tasks preview {3}' \
             --preview-window 'down,65%,wrap' \
             --bind 'ctrl-x:execute-silent(claude-tasks exit {3} {4})+reload(claude-tasks list)' \
-            --bind 'alt-k:execute-silent(claude-tasks kill {3} {4})+reload(claude-tasks list)'
+            --bind 'alt-k:execute-silent(claude-tasks kill {3} {4})+reload(claude-tasks list)' \
+            --bind 'alt-m:execute(claude-tasks worktree-merge {3})+reload(claude-tasks list)' \
+            --bind 'alt-r:execute-silent(claude-tasks worktree-discard {3})+reload(claude-tasks list)'
     )
     test -z "$out"; and return 0
     set -l key $out[1]
@@ -61,6 +63,21 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
         end
         set -l fsock (claude-tasks sock $dir $slot)
         dtach -A $fsock (command -v claude) --continue --fork-session
+        return
+    end
+
+    if test "$key" = ctrl-w
+        # 平行開発: native worktree を生成して起動。選択が worktree 行なら母艦を使う。
+        set -l repo $dir
+        if string match -q '*/.claude/worktrees/*' -- $dir
+            set repo (string replace -r '/\.claude/worktrees/.*' '' -- $dir)
+        end
+        set -l name (claude-tasks worktree-newname $repo)
+        set -l wt $repo/.claude/worktrees/$name
+        claude-tasks add-history $wt
+        cd $repo; or return 1
+        # 母艦で claude --worktree(worktree 作成+.worktreeinclude)。socket は worktree パスで鍵付け。
+        dtach -A (claude-tasks sock $wt) (command -v claude) --worktree $name
         return
     end
 
