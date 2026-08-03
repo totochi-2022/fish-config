@@ -35,7 +35,7 @@ function ccpick --description "Claude セッションを一覧(稼働状態)か�
             --expect=enter,ctrl-f,ctrl-w \
             --prompt 'Claude> ' \
             --header '● 稼働 / ○ 停止   Enter:開く  C-f:会話fork  C-w:worktree生成  M-m:結合  M-r:破棄  C-x:終了  M-k:kill' \
-            --preview 'claude-tasks preview {3}' \
+            --preview 'claude-tasks preview {3} {4}' \
             --preview-window 'down,65%,wrap' \
             --bind 'ctrl-x:execute-silent(claude-tasks exit {3} {4})+reload(claude-tasks list)' \
             --bind 'alt-k:execute-silent(claude-tasks kill {3} {4})+reload(claude-tasks list)' \
