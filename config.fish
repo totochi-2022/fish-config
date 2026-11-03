@@ -20,6 +20,11 @@ if status is-interactive
         # mise completions fish | source  # 一時的に無効化（usage CLIが必要）
     end
 
+    # carapace: 多数のコマンドの補完（mise で導入。fish 既定の補完が無いコマンドも説明付きで出る）
+    if command -q carapace
+        carapace _carapace fish | source
+    end
+
     # ls関係のエイリアス（mise activateの後に配置）
     alias ls="eza --group-directories-first -F"
     alias lsm="eza --sort=modified --group-directories-first -rF"
